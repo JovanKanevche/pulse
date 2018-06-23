@@ -10,7 +10,7 @@ export default class App extends React.Component {
       pusleData: []
     }
 
-    this.socket = io.connect('http://192.168.100.7:5050')
+    this.socket = io.connect('http://192.168.1.116:5050')
 
     this.socket.on('connect', () => {
       console.log('connected')

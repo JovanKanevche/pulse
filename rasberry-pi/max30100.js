@@ -16,7 +16,7 @@ sensor.high_res_enable(true)
 sensor.mode(sensorObj.MAX30100_MODE_SPO2_EN)
 
 // Read individual samples
-for (let i = 0; i < 10; i++) {
+for (var i = 0; i < 10; i++) {
   const val = sensor.sample()
   console.log('Single value IR: %d R: %d ', val.IR, val.R)
 }
