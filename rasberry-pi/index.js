@@ -6,12 +6,19 @@ const sensor = new sensorObj.MAX30100(0)
 
 console.log('Oximeter sensor example...')
 console.log('Temperature: %d C', sensor.temperature())
+
 console.log('Version: 0x%s', sensor.version().toString(16))
 
+setInterval(() => {
+  socket.emit('temp', { temp: sensor.temperature() })
+}, 1000)
+
 io.on('connection', socket => {
-  for (var i = 0; i < 10; i++) {
-    console.log('Single value IR: %d R: %d ', { IR: i, R: -1 })
-    socket.emit('pulse', { IR: i, R: -1 })
+  for (let i = 0; i < 10; i++) {
+    const val = sensor.sample()
+
+    console.log('Single value IR: %d R: %d ', val.IR, val.R)
+    socket.emit('pulse', { IR: val.IR, R: val.R })
   }
 })
 
