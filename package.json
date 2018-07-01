@@ -1,14 +1,13 @@
 {
   "main": "node_modules/expo/AppEntry.js",
-  "private": true,
+  "description": "This is an app that connects to a max30100 sensor and displays pulse and temperature data.",
+  "private": false,
   "dependencies": {
-    "expo": "^27.0.1",
+    "expo": "^28.0.0",
     "http": "^0.0.0",
-    "react": "16.3.2",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
-    "react-native-paper": "^1.6.0",
-    "react-native-svg-charts": "^5.0.0",
-    "react-navigation": "^1.5.11",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
+    "react-native-svg-charts": "^5.2.0",
     "socket.io-client": "^2.1.1"
   }
 }

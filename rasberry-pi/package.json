@@ -1,7 +1,7 @@
 {
   "name": "rasberry-pulse",
   "version": "1.0.0",
-  "description": "rasberry pi code for pusle",
+  "description": "This is the backend server on the rasberry pi, which sends data to the mobile application.",
   "main": "index.js",
   "author": "Jovan Kanevche",
   "license": "MIT",
