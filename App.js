@@ -1,33 +1,47 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import MainScreen from './app/screens/MainScreen'
+import { StyleSheet, View, Text } from 'react-native'
+import Graph from './app/components/Graph'
 import io from 'socket.io-client'
 
 export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      pusleData: []
+      IRData: [],
+      RData: [],
+      temp: 0,
+      connected: false
     }
-
-    this.socket = io.connect('http://192.168.1.116:5050')
+    this.socket = io.connect('http://192.168.1.116:5050') // ip
 
     this.socket.on('connect', () => {
-      console.log('connected')
-      // this.setState({ pusleData: [] })
+      this.setState({ connected: true })
     })
 
-    this.socket.on('pulse', pusle => {
-      console.log(pusle)
-      this.setState({ pusleData: [...this.state.pusleData, pusle.IR] })
-      console.log(this.state.pusleData)
+    this.socket.on('pulse', ({ IR, R }) => {
+      this.setState({
+        IRData: [...this.state.IRData, IR],
+        RData: [...this.state.RData, R]
+      })
+    })
+
+    this.socket.on('temp', ({ temp }) => {
+      this.setState({ temp })
     })
   }
 
   render() {
-    return (
+    return this.state.connected ? (
       <View style={styles.container}>
-        <MainScreen data={this.state.pusleData} />
+        <Text style={styles.text}>IR</Text>
+        <Graph data={this.state.IRData} />
+        <Text style={styles.text}>R</Text>
+        <Graph data={this.state.IRData} />
+        <Text style={styles.text}>Temp: {this.state.temp}</Text>
+      </View>
+    ) : (
+      <View style={styles.container}>
+        <Text style={styles.text}>Device not connected to rasberry pi</Text>
       </View>
     )
   }
@@ -39,5 +53,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  text: {
+    fontSize: 18
   }
 })
