@@ -1,6 +1,6 @@
-## This App focuses on MAX30100 Pulse Oximeter and Heart-Rate.
+## This App focuses on MAX30100 Pulse Oximeter and Heart-Rate
 
-### Frontend.
+### Frontend
 
 The frontend app that connects to a max30100 sensor and displays pulse and temperature data.
 It uses react native and expo to render the app.
