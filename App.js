@@ -12,21 +12,24 @@ export default class App extends React.Component {
       temp: 0,
       connected: false
     }
-    this.socket = io.connect('http://192.168.1.116:5050') // ip
+    this.socket = io.connect('http://192.168.1.110:5050') // ip
 
     this.socket.on('connect', () => {
       this.setState({ connected: true })
     })
 
     this.socket.on('pulse', ({ IR, R }) => {
+      if (this.state.IRData.length > 19) this.state.IRData.shift()
+      if (this.state.RData.length > 19) this.state.RData.shift()
+
       this.setState({
-        IRData: [...this.state.IRData, IR],
-        RData: [...this.state.RData, R]
+        IRData: [...this.state.IRData, Math.round((IR / 65553) * 100)],
+        RData: [...this.state.RData, Math.round((R / 65553) * 100)]
       })
     })
 
     this.socket.on('temp', ({ temp }) => {
-      this.setState({ temp })
+      this.setState({ temp: Math.round(temp) })
     })
   }
 

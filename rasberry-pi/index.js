@@ -9,17 +9,17 @@ console.log('Temperature: %d C', sensor.temperature())
 
 console.log('Version: 0x%s', sensor.version().toString(16))
 
-setInterval(() => {
-  socket.emit('temp', { temp: sensor.temperature() })
-}, 1000)
+sensor.high_res_enable(true)
+
+// Set to sample HR
+sensor.mode(sensorObj.MAX30100_MODE_HR_EN)
 
 io.on('connection', socket => {
-  for (let i = 0; i < 10; i++) {
+  setInterval(() => {
+    socket.emit('temp', { temp: sensor.temperature() })
     const val = sensor.sample()
-
-    console.log('Single value IR: %d R: %d ', val.IR, val.R)
     socket.emit('pulse', { IR: val.IR, R: val.R })
-  }
+  }, 300)
 })
 
 // exit on ^C

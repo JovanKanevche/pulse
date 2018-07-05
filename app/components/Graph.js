@@ -1,6 +1,6 @@
 import React from 'react'
 import { LineChart, Grid, YAxis } from 'react-native-svg-charts'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const Empty = () => (
   <View style={{ height: 200, justifyContent: 'center' }}>
@@ -12,7 +12,7 @@ const contentInset = { top: 20, bottom: 20 }
 
 export default ({ data }) =>
   data.length > 0 ? (
-    <View style={{ height: 200, flexDirection: 'row', padding: 16 }}>
+    <View style={styles.graphContainer}>
       <YAxis
         data={data}
         contentInset={contentInset}
@@ -21,9 +21,10 @@ export default ({ data }) =>
           fontSize: 10
         }}
         numberOfTicks={10}
+        formatLabel={value => Math.round(value)}
       />
       <LineChart
-        style={{ flex: 1, width: '100%' }}
+        style={styles.graphLine}
         data={data}
         svg={{ stroke: 'rgb(134, 65, 244)' }}
         contentInset={contentInset}
@@ -34,3 +35,8 @@ export default ({ data }) =>
   ) : (
     <Empty />
   )
+
+const styles = StyleSheet.create({
+  graphContainer: { height: 200, flexDirection: 'row', padding: 16 },
+  graphLine: { flex: 1 }
+})
